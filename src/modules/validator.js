@@ -1,70 +1,60 @@
 'use strict';
 
 const validator = () => {
-	const inputText = document.querySelectorAll('input[type = text]');
-	const inputEmail = document.querySelectorAll('input[type = email]');
-	const inputTel = document.querySelectorAll('input[type = tel]');
-	const textarea = document.getElementById('form2-message');
-
-	inputText.forEach((item) => {
-		item.addEventListener('input', (e) => {
-			e.target.value = e.target.value.replace(/[^\sа-яА-Я-]+/i, "");
-		});
-	});
-	inputEmail.forEach((item) => {
-		item.addEventListener('input', (e) => {
-			e.target.value = e.target.value.replace(/[^\w@_\-.!~*']+/, "");
-		});
-	});
-	inputTel.forEach((item) => {
-		item.addEventListener('input', (e) => {
-			e.target.value = e.target.value.replace(/[^\d()-]+/, "");
-		});
-	});
-	textarea.addEventListener('input', (e) => {
-		e.target.value = e.target.value.replace(/[^\sа-яА-Я-]+/i, "");
-	});
-	const delSpace = (e) => {
-		e.target.value = e.target.value.replace(/^[\s-]*/, "");
-		e.target.value = e.target.value.replace(/[\s-]*$/, "");
-		e.target.value = e.target.value.replace(/-{2,}/g, "-");
-		e.target.value = e.target.value.replace(/\s{2,}/g, " ");
+	const InputPhone = document.querySelectorAll("input[type='tel']");
+	const inputMessage = document.querySelector(".mess");
+	const inputText = document.querySelectorAll("input[type='text']");
+	const inputMail = document.querySelectorAll("input[type='email']");
+	const spaceDel = (str) => {
+		let reg = /^[\s\-]+|[\s\-]+$/;
+		str = str.replace(reg, "");
+		reg = /\s{2,}/g;
+		str = str.replace(reg, " ");
+		return str;
 	};
-	inputText.forEach(item => {
-		item.addEventListener('blur', (e) => {
-			delSpace(e);
-		});
+	inputMessage.addEventListener("input", (e) => {
+		let reg = /[^а-яА-Я\s\-]/g;
+		e.target.value = e.target.value.replace(reg, "");
 	});
-	inputEmail.forEach(item => {
-		item.addEventListener('blur', (e) => {
-			delSpace(e);
+	inputMessage.addEventListener("blur", (e) => {
+		e.target.value = spaceDel(e.target.value);
+	});
+	InputPhone.forEach((input) => {
+		input.addEventListener("input", (e) => {
+			let reg = /[^\d\(\-\)]+$/g;
+			e.target.value = e.target.value.replace(reg, "");
 		});
 	});
 
-	inputTel.forEach(item => {
-		item.addEventListener('blur', (e) => {
-			delSpace(e);
-		});
-	});
-	textarea.addEventListener('blur', (e) => {
-		delSpace(e);
-	});
-
-	// первая буква в верхнем регистре
-
-	inputText.forEach((item) => {
-		item.addEventListener('blur', (e) => {
-			const inputValueArr = [];
-			let value = e.target.value;
-			value = value.trim().split(" ");
-			value.forEach(el => {
-					el = el[0].toUpperCase() + el.slice(1).toLowerCase();
-					inputValueArr.push(el);
+	inputText.forEach((input) => {
+		if (!input.classList.contains("calc-item")) {
+			let reg = /[^а-яА-Я\s\-]/g;
+			input.addEventListener("input", (e) => {
+			e.target.value = e.target.value.replace(reg, "");
 			});
-			e.target.value = inputValueArr.join(' ');
-		});
+			input.addEventListener("blur", (e) => {
+			let reg;
+			e.target.value = spaceDel(e.target.value);
+			reg = /^[а-яА-Я]|\s[а-яА-Я]/g;
+			e.target.value = e.target.value.replace(reg, (str) => {
+				return str.toUpperCase();
+			});
+			});
+		} else if (input.classList.contains("calc-item")) {
+			input.addEventListener("input", (event) => {
+			event.target.value = event.target.value.replace(/\D+/, "");
+			});
+		}
 	});
 
+	inputMail.forEach((input) => {
+		input.addEventListener("input", (e) => {
+			let reg = /[^a-zA-Z\d\-\.\_\!\~\*\'\@]/g;
+			e.target.value = e.target.value.replace(reg, "");
+		});
+	});
 };
+
+
 
 export default validator;
