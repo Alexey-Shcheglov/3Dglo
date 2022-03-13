@@ -5,6 +5,7 @@ import scroll from './modules/scroll';
 import validator from './modules/validator';
 import tabs from './modules/tabs';
 import slider from './modules/slider';
+import calc from './modules/calc';
 
 
 timer('10 march 2022');
@@ -13,6 +14,7 @@ modal();
 scroll();
 validator();
 tabs();
+calc(100);
 slider({
 	slider: 'portfolio-content',
 	slide: 'portfolio-item',
