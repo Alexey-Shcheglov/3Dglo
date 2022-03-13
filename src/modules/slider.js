@@ -95,7 +95,7 @@ const slider = (options) => {
 
     nextSlide(slides, currentSlide, slideActive);
     nextSlide(dots, currentSlide, dotActive);
-  })
+  });
 
   sliderBlock.addEventListener(
     'mouseenter',
