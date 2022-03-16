@@ -1,37 +1,58 @@
+import { animate } from "./helpers";
+
 const modal = () => {
 	const modal = document.querySelector('.popup');
-	const modalForm = modal.querySelector('.popup-content');
+	const content = modal.querySelector('.popup-content');
 	const buttons = document.querySelectorAll('.popup-btn');
-	let appearanceFrame; 
-	let animateCount;
- 
-	const modalAppearance = () => {
-	  appearanceFrame = requestAnimationFrame(modalAppearance);
-	  if (animateCount < 100) {
-		 animateCount += 2;
-		 modalForm.style.opacity = `${animateCount}%`;
-	  } else {
-		 cancelAnimationFrame(appearanceFrame);
-		 modalForm.style.opacity = "";
-	  }
-	};
- 
-	buttons.forEach((btn) => {
-	  btn.addEventListener('click', () => {
-		 modal.style.display = 'block';
-		 if (+screen.width > 768) {
-			animateCount = 0;
-			modalForm.style.opacity = 0;
-			modalAppearance();
-		 }
-	  });
+	const screenWidth = window.screen.width;
+
+	buttons.forEach(btn => {
+		btn.addEventListener('click', () => {
+			let count = 0;
+			let idInterval;
+
+			content.style.top = '0%';
+			const anim = () => {
+				if(screenWidth < 768) {
+					animate({
+						duration: 2000,
+						timing(timeFraction) { 
+						return timeFraction;
+						},
+					draw(progress) {
+						modal.style.display = 'block';
+						content.style.top = (progress * 30) + "%";
+						}
+					});
+				} else {
+					count++;
+					idInterval = requestAnimationFrame(anim);
+					if(count <= 85) {
+						animate({
+							duration: 2000,
+							timing(timeFraction) {
+									return timeFraction;
+							},
+							draw(progress) {
+									modal.style.display = 'block';
+									content.style.top = (progress * count * 0.2) + "%";
+							}
+						});
+					} else {
+						cancelAnimationFrame(idInterval);
+					}
+				}
+			};
+
+			anim();
+		});
 	});
- 
+
 	modal.addEventListener('click', (e) => {
-		if(!e.target.closest('.popup-content') || e.target.classList.contains('popup-close')) {
+		if (!e.target.closest('.popup-content') || e.target.classList.contains('popup-close')) {
 			modal.style.display = 'none';
 		}
 	});
- };
- 
- export default modal;
+};
+
+export default modal;
