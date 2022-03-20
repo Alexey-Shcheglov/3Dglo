@@ -47,8 +47,9 @@ const validator = () => {
 		}
 	});
 
-	inputMail.forEach((input) => {
-		input.addEventListener("input", (e) => {
+	inputMail.forEach((item) => {
+		item.required = true;
+		item.addEventListener("input", (e) => {
 			let reg = /[^a-zA-Z\d\-\.\_\!\~\*\'\@]/g;
 			e.target.value = e.target.value.replace(reg, "");
 		});

@@ -77,7 +77,7 @@ const sendForm = ({ formId, someElement = [] }) => {
 
 						formElements.forEach(input => {
 							input.value = '';
-						})
+						});
 						setInterval(() => {
 							statusBlock.textContent = "";
 						}, 3500);
