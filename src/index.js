@@ -6,7 +6,7 @@ import validator from './modules/validator';
 import tabs from './modules/tabs';
 import slider from './modules/slider';
 import calc from './modules/calc';
-
+import sendForm from './modules/sendForms';
 
 timer('10 march 2022');
 menu();
@@ -26,5 +26,16 @@ slider({
 	arrowLeft: '#arrow-left',
 	arrowRight: '#arrow-right',
  });
+ sendForm({ 
+	formId: 'form1', 
+	someElement: [
+		{
+			type: 'block',
+			id: 'total'
+		}
+	] 
+});
+sendForm({formId: 'form2'});
+sendForm({formId: 'form3'});
 
 
