@@ -30,9 +30,9 @@ slider({
 	formId: 'form1', 
 	someElement: [
 		{
-			type: 'block',
+			type: 'input',
 			id: 'total'
-		}
+		},
 	] 
 });
 sendForm({formId: 'form2'});

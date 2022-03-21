@@ -4,7 +4,6 @@ const modal = () => {
 	const modal = document.querySelector('.popup');
 	const content = modal.querySelector('.popup-content');
 	const buttons = document.querySelectorAll('.popup-btn');
-	const screenWidth = window.screen.width;
 
 	buttons.forEach(btn => {
 		btn.addEventListener('click', () => {
@@ -13,36 +12,25 @@ const modal = () => {
 
 			content.style.top = '0%';
 			const anim = () => {
-				if(screenWidth < 768) {
+				
+				count++;
+				idInterval = requestAnimationFrame(anim);
+				if(count <= 15) {
 					animate({
-						duration: 2000,
-						timing(timeFraction) { 
-						return timeFraction;
+						duration: 100,
+						timing(timeFraction) {
+							return timeFraction;
 						},
-					draw(progress) {
-						modal.style.display = 'block';
-						content.style.top = (progress * 30) + "%";
-						}
+						draw(progress) {
+							modal.style.display = 'block';
+							content.style.top = progress * count  + "%";
+						}		
 					});
 				} else {
-					count++;
-					idInterval = requestAnimationFrame(anim);
-					if(count <= 85) {
-						animate({
-							duration: 2000,
-							timing(timeFraction) {
-									return timeFraction;
-							},
-							draw(progress) {
-									modal.style.display = 'block';
-									content.style.top = (progress * count * 0.2) + "%";
-							}
-						});
-					} else {
-						cancelAnimationFrame(idInterval);
-					}
+					cancelAnimationFrame(idInterval);
 				}
 			};
+		
 
 			anim();
 		});

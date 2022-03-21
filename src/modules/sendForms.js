@@ -13,6 +13,19 @@ const sendForm = ({ formId, someElement = [] }) => {
 		let success = true;
 
 		list.forEach(item => {
+			// switch(item.name) {
+			// 	case 'user_name': 
+			// 	success = item.value.length > 2;
+			// 	break;
+			// 	case 'user_phone': 
+			// 	success = item.value.length > 10;
+			// 	break;
+			// 	case 'user_massage': 
+			// 	success = item.value.length > 2;
+			// 	break;
+			// 	default: 
+			// 	return;
+			// }
 			if (item.name === 'user_name') {
 				if(item.value.length < 2) {
 					success = false;
@@ -25,7 +38,10 @@ const sendForm = ({ formId, someElement = [] }) => {
 				if(item.value.length < 2) {
 					success = false;
 				}
-			} else {
+			} else if (item.name === 'user_email') {
+				return;
+			}
+			 else {
 					success = true;
 			}
 		});
@@ -65,7 +81,8 @@ const sendForm = ({ formId, someElement = [] }) => {
 			if(elem.type === 'block') {
 					formBody[elem.id] = element.textContent;
 			} else if (elem.type === 'input') {
-					formBody[elem.id] = element.value;
+				element.value > 0 ? formBody[elem.id] = element.value : '';
+					// formBody[elem.id] = element.value;
 			}
 		});
 
